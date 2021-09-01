@@ -44,5 +44,5 @@ void uni_platform_init(int argc, const char** argv) {
 
   g_platform->init(argc, argv);
 
-  logi("Platform: %s\n", g_platform->name);
+  //logi("Platform: %s\n", g_platform->name);
 }

@@ -2566,7 +2566,7 @@ static void mightymiggy_on_device_oob_event(uni_hid_device_t *d,
   //~ mightymiggy_instance_t* ins = get_mightymiggy_instance(d);
 
   //~ if (ins->gamepad_seat == GAMEPAD_SEAT_NONE) {
-  //~ logi(
+  //~ //logi(
   //~ "GAMEPAD_SEAT_NONE\n");
   //~ "unijoysticle: cannot swap port since device has joystick_port = "
   //~ return;
@@ -2574,7 +2574,7 @@ static void mightymiggy_on_device_oob_event(uni_hid_device_t *d,
 
   //~ // This could happen if device is any Combo emu mode.
   //~ if (ins->gamepad_seat == (GAMEPAD_SEAT_A | GAMEPAD_SEAT_B)) {
-  //~ logi(
+  //~ //logi(
   //~ "unijoysticle: cannot swap port since has more than one port "
   //~ "associated with. "
   //~ "Leave emu mode and try again.\n");
@@ -2589,7 +2589,7 @@ static void mightymiggy_on_device_oob_event(uni_hid_device_t *d,
   //~ (get_mightymiggy_instance(tmp_d)->gamepad_seat > 0)) {
   //~ num_devices++;
   //~ if (num_devices > 1) {
-  //~ logi(
+  //~ //logi(
   //~ "unijoysticle: cannot swap joystick ports when more than one "
   //~ "device is "
   //~ "attached\n");

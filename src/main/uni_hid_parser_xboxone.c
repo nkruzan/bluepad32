@@ -60,11 +60,11 @@ void uni_hid_parser_xboxone_setup(uni_hid_device_t* d) {
   // FIXME: Parse HID descriptor and see if it supports 0xf buttons. Checking
   // for the len is a horrible hack.
   if (d->hid_descriptor_len > 330) {
-    logi("Xbox one: Assuming it is firmware 4.8\n");
+    //logi("Xbox one: Assuming it is firmware 4.8\n");
     ins->version = XBOXONE_FIRMWARE_V4_8;
   } else {
     // It is really firmware 4.8, it will be set later
-    logi("Xbox one: Assuming it is firmware 3.1\n");
+    //logi("Xbox one: Assuming it is firmware 3.1\n");
     ins->version = XBOXONE_FIRMWARE_V3_1;
   }
 }
@@ -141,9 +141,9 @@ static void parse_usage_firmware_v3_1(uni_hid_device_t* d,
           gp->updated_states |= GAMEPAD_STATE_DPAD;
           break;
         default:
-          logi(
-              "Xbox One: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
-              usage_page, usage, value);
+          //logi(
+         //     "Xbox One: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
+         //     usage_page, usage, value);
           break;
       }
       break;
@@ -154,10 +154,10 @@ static void parse_usage_firmware_v3_1(uni_hid_device_t* d,
           gp->battery = value;
           break;
         default:
-          logi(
-              "Xbox One: Unsupported page: 0x%04x, usage: 0x%04x, "
-              "value=0x%x\n",
-              usage_page, usage, value);
+          //logi(
+         //     "Xbox One: Unsupported page: 0x%04x, usage: 0x%04x, "
+       //       "value=0x%x\n",
+        //      usage_page, usage, value);
           break;
       }
       break;
@@ -238,14 +238,14 @@ static void parse_usage_firmware_v3_1(uni_hid_device_t* d,
           // Only available in firmware v4.8.
           xboxone_instance_t* ins = get_xboxone_instance(d);
           ins->version = XBOXONE_FIRMWARE_V4_8;
-          logi("Xbox one: Firmware 4.8 detected\n");
+          //logi("Xbox one: Firmware 4.8 detected\n");
           break;
         }
         default:
-          logi(
-              "Xbox One: Unsupported page: 0x%04x, usage: 0x%04x, "
-              "value=0x%x\n",
-              usage_page, usage, value);
+          //logi(
+          //    "Xbox One: Unsupported page: 0x%04x, usage: 0x%04x, "
+          //    "value=0x%x\n",
+          //    usage_page, usage, value);
           break;
       }
       break;
@@ -257,18 +257,18 @@ static void parse_usage_firmware_v3_1(uni_hid_device_t* d,
         case 0x0224:
           break;
         default:
-          logi(
-              "Xbox One: Unsupported page: 0x%04x, usage: 0x%04x, "
-              "value=0x%x\n",
-              usage_page, usage, value);
+          //logi(
+            //  "Xbox One: Unsupported page: 0x%04x, usage: 0x%04x, "
+           //   "value=0x%x\n",
+          //    usage_page, usage, value);
           break;
       }
       break;
 
     // unknown usage page
     default:
-      logi("Xbox One: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
-           usage_page, usage, value);
+      //logi("Xbox One: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
+       //    usage_page, usage, value);
       break;
   }
 }
@@ -320,9 +320,9 @@ static void parse_usage_firmware_v4_8(uni_hid_device_t* d,
           gp->updated_states |= GAMEPAD_STATE_DPAD;
           break;
         default:
-          logi(
-              "Xbox One: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
-              usage_page, usage, value);
+          //logi(
+        //      "Xbox One: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
+         //     usage_page, usage, value);
           break;
       }
       break;
@@ -338,10 +338,10 @@ static void parse_usage_firmware_v4_8(uni_hid_device_t* d,
           gp->updated_states |= GAMEPAD_STATE_BRAKE;
           break;
         default:
-          logi(
-              "Xbox One: Unsupported page: 0x%04x, usage: 0x%04x, "
-              "value=0x%x\n",
-              usage_page, usage, value);
+          //logi(
+         //     "Xbox One: Unsupported page: 0x%04x, usage: 0x%04x, "
+         //     "value=0x%x\n",
+         //     usage_page, usage, value);
           break;
       }
       break;
@@ -352,10 +352,10 @@ static void parse_usage_firmware_v4_8(uni_hid_device_t* d,
           gp->battery = value;
           break;
         default:
-          logi(
-              "Xbox One: Unsupported page: 0x%04x, usage: 0x%04x, "
-              "value=0x%x\n",
-              usage_page, usage, value);
+          //logi(
+           //   "Xbox One: Unsupported page: 0x%04x, usage: 0x%04x, "
+           //   "value=0x%x\n",
+          //    usage_page, usage, value);
           break;
       }
       break;
@@ -441,10 +441,10 @@ static void parse_usage_firmware_v4_8(uni_hid_device_t* d,
           gp->updated_states |= GAMEPAD_STATE_BUTTON_THUMB_R;
           break;
         default:
-          logi(
-              "Xbox One: Unsupported page: 0x%04x, usage: 0x%04x, "
-              "value=0x%x\n",
-              usage_page, usage, value);
+          //logi(
+           //   "Xbox One: Unsupported page: 0x%04x, usage: 0x%04x, "
+           //   "value=0x%x\n",
+          //    usage_page, usage, value);
           break;
       }
       break;
@@ -460,18 +460,18 @@ static void parse_usage_firmware_v4_8(uni_hid_device_t* d,
           gp->updated_states |= GAMEPAD_STATE_MISC_BUTTON_BACK;
           break;
         default:
-          logi(
-              "Xbox One: Unsupported page: 0x%04x, usage: 0x%04x, "
-              "value=0x%x\n",
-              usage_page, usage, value);
+          //logi(
+           //   "Xbox One: Unsupported page: 0x%04x, usage: 0x%04x, "
+             // "value=0x%x\n",
+           //   usage_page, usage, value);
           break;
       }
       break;
 
     // unknown usage page
     default:
-      logi("Xbox One: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
-           usage_page, usage, value);
+      //logi("Xbox One: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
+       //    usage_page, usage, value);
       break;
   }
 }

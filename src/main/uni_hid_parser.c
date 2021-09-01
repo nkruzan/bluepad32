@@ -165,7 +165,7 @@ void uni_hid_parser_process_dpad(uint16_t usage, uint32_t value,
         *dpad &= ~DPAD_LEFT;
       break;
     default:
-      logi("Unsupported DPAD usage: 0x%02x", usage);
+      //logi("Unsupported DPAD usage: 0x%02x", usage);
       break;
   }
 }

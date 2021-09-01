@@ -83,10 +83,10 @@ void uni_hid_parser_android_parse_usage(uni_hid_device_t* d,
         default:
           // Only report unsupported values if they are 1.
           if (value)
-            logi(
-                "Android: Unsupported page: 0x%04x, usage: 0x%04x, "
-                "value=0x%x\n",
-                usage_page, usage, value);
+            //logi(
+        //        "Android: Unsupported page: 0x%04x, usage: 0x%04x, "
+        //        "value=0x%x\n",
+         //       usage_page, usage, value);
           break;
       }
       break;
@@ -101,10 +101,10 @@ void uni_hid_parser_android_parse_usage(uni_hid_device_t* d,
         default:
           // Only report unsupported values if they are 1.
           if (value)
-            logi(
-                "Android: Unsupported page: 0x%04x, usage: 0x%04x, "
-                "value=0x%x\n",
-                usage_page, usage, value);
+            //logi(
+           //     "Android: Unsupported page: 0x%04x, usage: 0x%04x, "
+           //     "value=0x%x\n",
+          //      usage_page, usage, value);
           break;
       };
       break;
@@ -115,10 +115,10 @@ void uni_hid_parser_android_parse_usage(uni_hid_device_t* d,
           break;
         default:
           if (value)
-            logi(
-                "Android: Unsupported page: 0x%04x, usage: 0x%04x, "
-                "value=0x%x\n",
-                usage_page, usage, value);
+            //logi(
+           //     "Android: Unsupported page: 0x%04x, usage: 0x%04x, "
+           //     "value=0x%x\n",
+           //     usage_page, usage, value);
           break;
       }
       break;
@@ -176,10 +176,10 @@ void uni_hid_parser_android_parse_usage(uni_hid_device_t* d,
         default:
           // Only report unsupported values if they are 1.
           if (value)
-            logi(
-                "Android: Unsupported page: 0x%04x, usage: 0x%04x, "
-                "value=0x%x\n",
-                usage_page, usage, value);
+            //logi(
+            //    "Android: Unsupported page: 0x%04x, usage: 0x%04x, "
+            //    "value=0x%x\n",
+            //    usage_page, usage, value);
           break;
       }
       break;
@@ -200,10 +200,10 @@ void uni_hid_parser_android_parse_usage(uni_hid_device_t* d,
         default:
           // Only report unsupported values if they are 1.
           if (value)
-            logi(
-                "Android: Unsupported page: 0x%04x, usage: 0x%04x, "
-                "value=0x%x\n",
-                usage_page, usage, value);
+            //logi(
+            //    "Android: Unsupported page: 0x%04x, usage: 0x%04x, "
+            //    "value=0x%x\n",
+            //    usage_page, usage, value);
           break;
       }
       break;
@@ -217,8 +217,8 @@ void uni_hid_parser_android_parse_usage(uni_hid_device_t* d,
     default:
       // Only report unsupported values if they are 1.
       if (value)
-        logi("Android: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
-             usage_page, usage, value);
+        //logi("Android: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
+        //     usage_page, usage, value);
       break;
   }
 }
@@ -226,7 +226,7 @@ void uni_hid_parser_android_parse_usage(uni_hid_device_t* d,
 void uni_hid_parser_android_set_player_leds(uni_hid_device_t* d, uint8_t leds) {
 #if 0
   static uint8_t report_id = 0;
-  logi("using report id = 0x%02x\n", report_id);
+  //logi("using report id = 0x%02x\n", report_id);
   uint8_t report[] = {0xa2, 0, 0x00 /* LED */};
   report[2] = 0x02; /* d->joystick_port; */
   report[1] = report_id++;

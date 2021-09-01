@@ -79,8 +79,8 @@ void uni_hid_parser_generic_parse_usage(uni_hid_device_t* d,
           gp->updated_states |= GAMEPAD_STATE_DPAD;
           break;
         default:
-          logi("Generic: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
-               usage_page, usage, value);
+          //logi("Generic: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
+        //       usage_page, usage, value);
           break;
       }
       break;
@@ -95,8 +95,8 @@ void uni_hid_parser_generic_parse_usage(uni_hid_device_t* d,
           gp->updated_states |= GAMEPAD_STATE_BRAKE;
           break;
         default:
-          logi("Generic: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
-               usage_page, usage, value);
+          //logi("Generic: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
+          //     usage_page, usage, value);
           break;
       };
       break;
@@ -121,8 +121,8 @@ void uni_hid_parser_generic_parse_usage(uni_hid_device_t* d,
         case 0xe7:  // keyboard right GUI
           break;
         default:
-          logi("Generic: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
-               usage_page, usage, value);
+          //logi("Generic: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
+           //    usage_page, usage, value);
           break;
       }
       break;
@@ -132,8 +132,8 @@ void uni_hid_parser_generic_parse_usage(uni_hid_device_t* d,
           gp->battery = value;
           break;
         default:
-          logi("Generic: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
-               usage_page, usage, value);
+          //logi("Generic: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
+          //     usage_page, usage, value);
           break;
       }
       break;
@@ -228,8 +228,8 @@ void uni_hid_parser_generic_parse_usage(uni_hid_device_t* d,
         case 0x10:  // unsupported
           break;
         default:
-          logi("Generic: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
-               usage_page, usage, value);
+          //logi("Generic: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
+         //      usage_page, usage, value);
           break;
       }
       break;
@@ -259,16 +259,16 @@ void uni_hid_parser_generic_parse_usage(uni_hid_device_t* d,
           gp->updated_states |= GAMEPAD_STATE_MISC_BUTTON_BACK;
           break;
         default:
-          logi("Generic: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
-               usage_page, usage, value);
+          //logi("Generic: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
+            //   usage_page, usage, value);
           break;
       }
       break;
 
     // unknown usage page
     default:
-      logi("Generic: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
-           usage_page, usage, value);
+      //logi("Generic: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
+        //   usage_page, usage, value);
       break;
   }
 }

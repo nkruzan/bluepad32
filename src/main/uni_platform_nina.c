@@ -787,7 +787,7 @@ static int nina_on_device_ready(uni_hid_device_t* d) {
   if (_gamepad_seats ==
       (GAMEPAD_SEAT_A | GAMEPAD_SEAT_B | GAMEPAD_SEAT_C | GAMEPAD_SEAT_D)) {
     // No more available seats, reject connection
-    logi("NINA: More available seats\n");
+    //logi("NINA: More available seats\n");
     return -1;
   }
 

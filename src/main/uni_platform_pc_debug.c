@@ -46,33 +46,33 @@ static pc_debug_instance_t* get_pc_debug_instance(uni_hid_device_t* d);
 // Platform Overrides
 //
 static void pc_debug_init(int argc, const char** argv) {
-  logi("pc_debug: init()\n");
+  //logi("pc_debug: init()\n");
   for (int i = 1; i < argc; i++) {
     if (strcmp(argv[i], "--enhanced") == 0 || strcmp(argv[i], "-e") == 0) {
       g_enhanced_mode = 1;
-      logi("Enhanced mode enabled\n");
+      //logi("Enhanced mode enabled\n");
     }
     if (strcmp(argv[i], "--delete") == 0 || strcmp(argv[i], "-d") == 0) {
       g_delete_keys = 1;
-      logi("Stored keys will be deleted\n");
+      //logi("Stored keys will be deleted\n");
     }
   }
 }
 
 static void pc_debug_on_init_complete(void) {
-  logi("pc_debug: on_init_complete()\n");
+  //logi("pc_debug: on_init_complete()\n");
 }
 
 static void pc_debug_on_device_connected(uni_hid_device_t* d) {
-  logi("pc_debug: device connected: %p\n", d);
+  //logi("pc_debug: device connected: %p\n", d);
 }
 
 static void pc_debug_on_device_disconnected(uni_hid_device_t* d) {
-  logi("pc_debug: device disconnected: %p\n", d);
+  //logi("pc_debug: device disconnected: %p\n", d);
 }
 
 static int pc_debug_on_device_ready(uni_hid_device_t* d) {
-  logi("pc_debug: device ready: %p\n", d);
+  //logi("pc_debug: device ready: %p\n", d);
   pc_debug_instance_t* ins = get_pc_debug_instance(d);
   ins->gamepad_seat = GAMEPAD_SEAT_A;
 
@@ -111,7 +111,7 @@ static void pc_debug_on_gamepad_data(uni_hid_device_t* d, uni_gamepad_t* gp) {
 }
 
 static int32_t pc_debug_get_property(uni_platform_property_t key) {
-  logi("pc_debug: get_property(): %d\n", key);
+  //logi("pc_debug: get_property(): %d\n", key);
   if (key != UNI_PLATFORM_PROPERTY_DELETE_STORED_KEYS) return -1;
   return g_delete_keys;
 }
@@ -122,7 +122,7 @@ static void pc_debug_on_device_oob_event(uni_hid_device_t* d,
     loge("ERROR: pc_debug_on_device_gamepad_event: Invalid NULL device\n");
     return;
   }
-  logi("pc_debug: on_device_oob_event(): %d\n", event);
+  //logi("pc_debug: on_device_oob_event(): %d\n", event);
 
   if (event != UNI_PLATFORM_OOB_GAMEPAD_SYSTEM_BUTTON) {
     loge("ERROR: pc_debug_on_device_gamepad_event: unsupported event: 0x%04x\n",

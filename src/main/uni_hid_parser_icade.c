@@ -86,14 +86,14 @@ static icade_instance_t* get_icade_instance(uni_hid_device_t* d);
 void uni_hid_parser_icade_setup(uni_hid_device_t* d) {
   icade_instance_t* ins = get_icade_instance(d);
   if (d->vendor_id == 0x15e4 && d->product_id) {
-    logi("Device detected as iCade Cabinet\n");
+    //logi("Device detected as iCade Cabinet\n");
     ins->model = ICADE_CABINET;
   } else if (d->vendor_id == 0x0a5c && d->product_id == 0x8502) {
-    logi("Device detected as iCade 8-Bitty\n");
+    //logi("Device detected as iCade 8-Bitty\n");
     ins->model = ICADE_8BITTY;
   } else {
-    logi("Unknown iCade device: v_id=0x%02x, p_id=0x%02x, File a bug.\n",
-         d->vendor_id, d->product_id);
+    //logi("Unknown iCade device: v_id=0x%02x, p_id=0x%02x, File a bug.\n",
+     //    d->vendor_id, d->product_id);
   }
 }
 
@@ -335,10 +335,10 @@ void uni_hid_parser_icade_parse_usage(uni_hid_device_t* d,
           break;
 
         default:
-          logi(
-              "iCade: Unsupported page: 0x%04x, usage: 0x%04x, "
-              "value=0x%x\n",
-              usage_page, usage, value);
+          //logi(
+         //     "iCade: Unsupported page: 0x%04x, usage: 0x%04x, "
+        //      "value=0x%x\n",
+        //      usage_page, usage, value);
           break;
       }
   }

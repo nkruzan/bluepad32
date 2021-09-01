@@ -154,7 +154,7 @@ static void handle_sdp_hid_query_result(uint8_t packet_type, uint16_t channel,
                   element = des_iterator_get_element(&additional_des_it);
                   const uint8_t* descriptor = de_get_string(element);
                   int descriptor_len = de_get_data_size(element);
-                  logi("SDP HID Descriptor (%d):\n", descriptor_len);
+                  //logi("SDP HID Descriptor (%d):\n", descriptor_len);
                   uni_hid_device_set_hid_descriptor(device, descriptor,
                                                     descriptor_len);
                   printf_hexdump(descriptor, descriptor_len);
@@ -234,9 +234,9 @@ static void handle_sdp_pid_query_result(uint8_t packet_type, uint16_t channel,
       }
       break;
     case SDP_EVENT_QUERY_COMPLETE:
-      logi("Vendor ID: 0x%04x - Product ID: 0x%04x\n",
-           uni_hid_device_get_vendor_id(device),
-           uni_hid_device_get_product_id(device));
+      //logi("Vendor ID: 0x%04x - Product ID: 0x%04x\n",
+   //        uni_hid_device_get_vendor_id(device),
+ //          uni_hid_device_get_product_id(device));
       uni_hid_device_guess_controller_type_from_pid_vid(device);
       uni_hid_device_set_sdp_device(NULL);
       uni_hid_device_set_state(device, STATE_SDP_VENDOR_FETCHED);
@@ -272,7 +272,7 @@ static void packet_handler(uint8_t packet_type, uint16_t channel,
             g_platform->on_init_complete();
             bt_ready = 1;
             gap_local_bd_addr(event_addr);
-            logi("BTstack up and running on %s.\n", bd_addr_to_str(event_addr));
+            //logi("BTstack up and running on %s.\n", bd_addr_to_str(event_addr));
             list_link_keys();
             start_scan();
           }
@@ -285,18 +285,18 @@ static void packet_handler(uint8_t packet_type, uint16_t channel,
           const uint8_t* param =
               hci_event_command_complete_get_return_parameters(packet);
           status = param[0];
-          logi("--> HCI_EVENT_COMMAND_COMPLETE: opcode = 0x%04x - status=%d\n",
-               opcode, status);
+          //logi("--> HCI_EVENT_COMMAND_COMPLETE: opcode = 0x%04x - status=%d\n",
+        //       opcode, status);
           break;
         }
         case HCI_EVENT_AUTHENTICATION_COMPLETE_EVENT: {
           status = hci_event_authentication_complete_get_status(packet);
           uint16_t handle =
               hci_event_authentication_complete_get_connection_handle(packet);
-          logi(
-              "--> HCI_EVENT_AUTHENTICATION_COMPLETE_EVENT: status=%d, "
-              "handle=0x%04x\n",
-              status, handle);
+          //logi(
+            //  "--> HCI_EVENT_AUTHENTICATION_COMPLETE_EVENT: status=%d, "
+            //  "handle=0x%04x\n",
+            //  status, handle);
           break;
         }
         case HCI_EVENT_PIN_CODE_REQUEST: {
@@ -304,7 +304,7 @@ static void packet_handler(uint8_t packet_type, uint16_t channel,
           // be valid until the next hci_send_cmd is called.
           static bd_addr_t pin_code;
           bd_addr_t local_addr;
-          logi("--> HCI_EVENT_PIN_CODE_REQUEST\n");
+          //logi("--> HCI_EVENT_PIN_CODE_REQUEST\n");
           // FIXME: Assumes incoming connection from Nintendo Wii using Sync.
           //
           // From: https://wiibrew.org/wiki/Wiimote#Bluetooth_Pairing:
@@ -315,63 +315,63 @@ static void packet_handler(uint8_t packet_type, uint16_t channel,
           hci_event_pin_code_request_get_bd_addr(packet, event_addr);
           gap_local_bd_addr(local_addr);
           reverse_bd_addr(local_addr, pin_code);
-          logi("Using PIN code: \n");
+          //logi("Using PIN code: \n");
           printf_hexdump(pin_code, sizeof(pin_code));
           gap_pin_code_response_binary(event_addr, pin_code, sizeof(pin_code));
           break;
         }
         case HCI_EVENT_USER_CONFIRMATION_REQUEST:
           // inform about user confirmation request
-          logi("SSP User Confirmation Request with numeric value '%" PRIu32
-               "'\n",
-               little_endian_read_32(packet, 8));
-          logi("SSP User Confirmation Auto accept\n");
+          //logi("SSP User Confirmation Request with numeric value '%" PRIu32
+          //     "'\n",
+         //      little_endian_read_32(packet, 8));
+          //logi("SSP User Confirmation Auto accept\n");
           break;
         case HCI_EVENT_HID_META:
-          logi("UNSUPPORTED ---> HCI_EVENT_HID_META <---\n");
+          //logi("UNSUPPORTED ---> HCI_EVENT_HID_META <---\n");
           break;
         case HCI_EVENT_INQUIRY_RESULT:
-          // logi("--> HCI_EVENT_INQUIRY_RESULT <--\n");
+          // //logi("--> HCI_EVENT_INQUIRY_RESULT <--\n");
           break;
         case HCI_EVENT_CONNECTION_REQUEST:
-          logi("--> HCI_EVENT_CONNECTION_REQUEST: link_type = %d <--\n",
-               hci_event_connection_request_get_link_type(packet));
+          //logi("--> HCI_EVENT_CONNECTION_REQUEST: link_type = %d <--\n",
+          //     hci_event_connection_request_get_link_type(packet));
           on_hci_connection_request(channel, packet, size);
           break;
         case HCI_EVENT_CONNECTION_COMPLETE:
-          logi("--> HCI_EVENT_CONNECTION_COMPLETE\n");
+          //logi("--> HCI_EVENT_CONNECTION_COMPLETE\n");
           on_hci_connection_complete(channel, packet, size);
           break;
         case HCI_EVENT_DISCONNECTION_COMPLETE:
-          logi("--> HCI_EVENT_DISCONNECTION_COMPLETE\n");
+          //logi("--> HCI_EVENT_DISCONNECTION_COMPLETE\n");
           break;
         case HCI_EVENT_LINK_KEY_REQUEST:
-          logi("--> HCI_EVENT_LINK_KEY_REQUEST:\n");
+          //logi("--> HCI_EVENT_LINK_KEY_REQUEST:\n");
           break;
         case HCI_EVENT_ROLE_CHANGE:
-          logi("--> HCI_EVENT_ROLE_CHANGE\n");
+          //logi("--> HCI_EVENT_ROLE_CHANGE\n");
           break;
         case HCI_EVENT_SYNCHRONOUS_CONNECTION_COMPLETE:
-          logi("--> HCI_EVENT_SYNCHRONOUS_CONNECTION_COMPLETE\n");
+          //logi("--> HCI_EVENT_SYNCHRONOUS_CONNECTION_COMPLETE\n");
           break;
         case HCI_EVENT_INQUIRY_RESULT_WITH_RSSI:
-          // logi("--> HCI_EVENT_INQUIRY_RESULT_WITH_RSSI <--\n");
+          // //logi("--> HCI_EVENT_INQUIRY_RESULT_WITH_RSSI <--\n");
           break;
         case HCI_EVENT_EXTENDED_INQUIRY_RESPONSE:
-          // logi("--> HCI_EVENT_EXTENDED_INQUIRY_RESPONSE <--\n");
+          // //logi("--> HCI_EVENT_EXTENDED_INQUIRY_RESPONSE <--\n");
           break;
         case HCI_EVENT_REMOTE_NAME_REQUEST_COMPLETE:
-          logi("--> HCI_EVENT_REMOTE_NAME_REQUEST_COMPLETE\n");
+          //logi("--> HCI_EVENT_REMOTE_NAME_REQUEST_COMPLETE\n");
           reverse_bd_addr(&packet[3], event_addr);
           device = uni_hid_device_get_instance_for_address(event_addr);
           if (device != NULL) {
             if (packet[2] == 0) {
-              logi("Name: '%s'\n", &packet[9]);
+              //logi("Name: '%s'\n", &packet[9]);
               uni_hid_device_set_name(device, &packet[9],
                                       strlen((const char*)&packet[9]));
               fsm_process(device);
             } else {
-              logi("Failed to get name: page timeout\n");
+              //logi("Failed to get name: page timeout\n");
             }
           }
           continue_remote_names();
@@ -388,7 +388,7 @@ static void packet_handler(uint8_t packet_type, uint16_t channel,
           }
           break;
         case L2CAP_EVENT_INCOMING_CONNECTION:
-          logi("--> L2CAP_EVENT_INCOMING_CONNECTION\n");
+          //logi("--> L2CAP_EVENT_INCOMING_CONNECTION\n");
           on_l2cap_incoming_connection(channel, packet, size);
           break;
         case L2CAP_EVENT_CHANNEL_OPENED:
@@ -400,11 +400,11 @@ static void packet_handler(uint8_t packet_type, uint16_t channel,
 
         // GAP EVENTS
         case GAP_EVENT_INQUIRY_RESULT:
-          // logi("--> GAP_EVENT_INQUIRY_RESULT\n");
+          // //logi("--> GAP_EVENT_INQUIRY_RESULT\n");
           on_gap_inquiry_result(channel, packet, size);
           break;
         case GAP_EVENT_INQUIRY_COMPLETE:
-          logi("--> GAP_EVENT_INQUIRY_COMPLETE\n");
+          //logi("--> GAP_EVENT_INQUIRY_COMPLETE\n");
           uni_hid_device_request_inquire();
           continue_remote_names();
           break;
@@ -436,14 +436,14 @@ static void on_hci_connection_request(uint16_t channel, uint8_t* packet,
   if (device == NULL) {
     device = uni_hid_device_create(event_addr);
     if (device == NULL) {
-      logi("Cannot create new device... no more slots available\n");
+      //logi("Cannot create new device... no more slots available\n");
       return;
     }
   }
   uni_hid_device_set_cod(device, cod);
   uni_hid_device_set_incoming(device, 1);
-  logi("on_hci_connection_request from: address = %s, cod=0x%04x\n",
-       bd_addr_to_str(event_addr), cod);
+  //logi("on_hci_connection_request from: address = %s, cod=0x%04x\n",
+  //     bd_addr_to_str(event_addr), cod);
 }
 
 static void on_hci_connection_complete(uint16_t channel, uint8_t* packet,
@@ -459,15 +459,15 @@ static void on_hci_connection_complete(uint16_t channel, uint8_t* packet,
   hci_event_connection_complete_get_bd_addr(packet, event_addr);
   status = hci_event_connection_complete_get_status(packet);
   if (status) {
-    logi("on_hci_connection_complete failed (0x%02x) for %s\n", status,
-         bd_addr_to_str(event_addr));
+    //logi("on_hci_connection_complete failed (0x%02x) for %s\n", status,
+    //     bd_addr_to_str(event_addr));
     return;
   }
 
   d = uni_hid_device_get_instance_for_address(event_addr);
   if (d == NULL) {
-    logi("on_hci_connection_complete: failed to get device for %s\n",
-         bd_addr_to_str(event_addr));
+    //logi("on_hci_connection_complete: failed to get device for %s\n",
+     //    bd_addr_to_str(event_addr));
     return;
   }
 
@@ -504,26 +504,26 @@ static void on_gap_inquiry_result(uint16_t channel, uint8_t* packet,
   uint16_t clock_offset = gap_event_inquiry_result_get_clock_offset(packet);
   uint32_t cod = gap_event_inquiry_result_get_class_of_device(packet);
 
-  logi("Device found: %s ", bd_addr_to_str(addr));
-  logi("with COD: 0x%06x, ", (unsigned int)cod);
-  logi("pageScan %d, ", page_scan_repetition_mode);
-  logi("clock offset 0x%04x", clock_offset);
+  //logi("Device found: %s ", bd_addr_to_str(addr));
+  //logi("with COD: 0x%06x, ", (unsigned int)cod);
+  //logi("pageScan %d, ", page_scan_repetition_mode);
+  //logi("clock offset 0x%04x", clock_offset);
   if (gap_event_inquiry_result_get_rssi_available(packet)) {
-    logi(", rssi %d dBm", (int8_t)gap_event_inquiry_result_get_rssi(packet));
+    //logi(", rssi %d dBm", (int8_t)gap_event_inquiry_result_get_rssi(packet));
   }
   if (gap_event_inquiry_result_get_name_available(packet)) {
     name_len = btstack_min(NAME_LEN_MAX - 1,
                            gap_event_inquiry_result_get_name_len(packet));
     memcpy(name_buffer, gap_event_inquiry_result_get_name(packet), name_len);
     name_buffer[name_len] = 0;
-    logi(", name '%s'", name_buffer);
+    //logi(", name '%s'", name_buffer);
   }
 
   if (uni_hid_device_is_cod_supported(cod)) {
     device = uni_hid_device_get_instance_for_address(addr);
     if (device != NULL && !uni_hid_device_is_orphan(device)) {
-      logi("... device already added (state=%d)\n",
-           uni_hid_device_get_state(device));
+      //logi("... device already added (state=%d)\n",
+      //     uni_hid_device_get_state(device));
       uni_hid_device_dump_device(device);
       bool deleted = uni_hid_device_auto_delete(device);
       if (!deleted) return;
@@ -543,10 +543,10 @@ static void on_gap_inquiry_result(uint16_t channel, uint8_t* packet,
         uni_hid_device_set_name(device, name_buffer, name_len);
       }
     }
-    logi("\n");
+    //logi("\n");
     fsm_process(device);
   } else {
-    logi("\n");
+    //logi("\n");
   }
 }
 
@@ -563,19 +563,19 @@ static void on_l2cap_channel_opened(uint16_t channel, uint8_t* packet,
 
   UNUSED(size);
 
-  logi("L2CAP_EVENT_CHANNEL_OPENED (channel=0x%04x)\n", channel);
+  //logi("L2CAP_EVENT_CHANNEL_OPENED (channel=0x%04x)\n", channel);
 
   l2cap_event_channel_opened_get_address(packet, address);
   status = l2cap_event_channel_opened_get_status(packet);
   if (status) {
-    logi("L2CAP Connection failed: 0x%02x.\n", status);
+    //logi("L2CAP Connection failed: 0x%02x.\n", status);
     // Practice showed that if any of these two status are received, it is
     // best to remove the link key. But this is based on empirical evidence,
     // not on theory.
     if (status == L2CAP_CONNECTION_RESPONSE_RESULT_RTX_TIMEOUT ||
         status == L2CAP_CONNECTION_BASEBAND_DISCONNECT) {
-      logi("Removing previous link key for address=%s.\n",
-           bd_addr_to_str(address));
+      //logi("Removing previous link key for address=%s.\n",
+      //     bd_addr_to_str(address));
       uni_hid_device_remove_entry_with_channel(channel);
       // Just in case the key is outdated we remove it. If fixes some
       // l2cap_channel_opened issues. It proves that it works when the status
@@ -592,10 +592,10 @@ static void on_l2cap_channel_opened(uint16_t channel, uint8_t* packet,
   local_mtu = l2cap_event_channel_opened_get_local_mtu(packet);
   remote_mtu = l2cap_event_channel_opened_get_remote_mtu(packet);
 
-  logi(
-      "PSM: 0x%04x, local CID=0x%04x, remote CID=0x%04x, handle=0x%04x, "
-      "incoming=%d, local MTU=%d, remote MTU=%d\n",
-      psm, local_cid, remote_cid, handle, incoming, local_mtu, remote_mtu);
+  //logi(
+  //    "PSM: 0x%04x, local CID=0x%04x, remote CID=0x%04x, handle=0x%04x, "
+   //   "incoming=%d, local MTU=%d, remote MTU=%d\n",
+  //    psm, local_cid, remote_cid, handle, incoming, local_mtu, remote_mtu);
 
   device = uni_hid_device_get_instance_for_address(address);
   if (device == NULL) {
@@ -610,13 +610,13 @@ static void on_l2cap_channel_opened(uint16_t channel, uint8_t* packet,
     case PSM_HID_CONTROL:
       device->hid_control_cid =
           l2cap_event_channel_opened_get_local_cid(packet);
-      logi("HID Control opened, cid 0x%02x\n", device->hid_control_cid);
+      //logi("HID Control opened, cid 0x%02x\n", device->hid_control_cid);
       uni_hid_device_set_state(device, STATE_L2CAP_CONTROL_CONNECTED);
       break;
     case PSM_HID_INTERRUPT:
       device->hid_interrupt_cid =
           l2cap_event_channel_opened_get_local_cid(packet);
-      logi("HID Interrupt opened, cid 0x%02x\n", device->hid_interrupt_cid);
+      //logi("HID Interrupt opened, cid 0x%02x\n", device->hid_interrupt_cid);
       uni_hid_device_set_state(device, STATE_L2CAP_INTERRUPT_CONNECTED);
       break;
     default:
@@ -633,13 +633,13 @@ static void on_l2cap_channel_closed(uint16_t channel, uint8_t* packet,
   UNUSED(size);
 
   local_cid = l2cap_event_channel_closed_get_local_cid(packet);
-  logi("L2CAP_EVENT_CHANNEL_CLOSED: 0x%04x (channel=0x%04x)\n", local_cid,
-       channel);
+  //logi("L2CAP_EVENT_CHANNEL_CLOSED: 0x%04x (channel=0x%04x)\n", local_cid,
+   //    channel);
   device = uni_hid_device_get_instance_for_cid(local_cid);
   if (device == NULL) {
     // Device might already been closed if the Control or Interrupt PSM was
     // closed first.
-    logi("Couldn't not find hid_device for cid = 0x%04x\n", local_cid);
+    //logi("Couldn't not find hid_device for cid = 0x%04x\n", local_cid);
     return;
   }
   uni_hid_device_set_connected(device, false);
@@ -660,11 +660,11 @@ static void on_l2cap_incoming_connection(uint16_t channel, uint8_t* packet,
   local_cid = l2cap_event_incoming_connection_get_local_cid(packet);
   remote_cid = l2cap_event_incoming_connection_get_remote_cid(packet);
 
-  logi(
-      "L2CAP_EVENT_INCOMING_CONNECTION (psm=0x%04x, local_cid=0x%04x, "
-      "remote_cid=0x%04x, handle=0x%04x, "
-      "channel=0x%04x\n",
-      psm, local_cid, remote_cid, handle, channel);
+  //logi(
+ //     "L2CAP_EVENT_INCOMING_CONNECTION (psm=0x%04x, local_cid=0x%04x, "
+  //    "remote_cid=0x%04x, handle=0x%04x, "
+//      "channel=0x%04x\n",
+ //     psm, local_cid, remote_cid, handle, channel);
   switch (psm) {
     case PSM_HID_CONTROL:
       l2cap_event_incoming_connection_get_address(packet, event_addr);
@@ -694,7 +694,8 @@ static void on_l2cap_incoming_connection(uint16_t channel, uint8_t* packet,
       l2cap_accept_connection(channel);
       break;
     default:
-      logi("Unknown PSM = 0x%02x\n", psm);
+      //logi("Unknown PSM = 0x%02x\n", psm);
+      break;
   }
 }
 
@@ -716,27 +717,27 @@ static void on_l2cap_data_packet(uint16_t channel, uint8_t* packet,
       !uni_hid_device_has_controller_type(d)) {
     sdp_d = uni_hid_device_get_sdp_device(&elapsed);
     if (sdp_d == d) {
-      logi("Device without HID descriptor or Product/Vendor ID yet.\n");
+      //logi("Device without HID descriptor or Product/Vendor ID yet.\n");
       // 1 second
       if (elapsed < (1 * 1000000)) {
-        logi("Waiting for SDP answer. Ignoring report.\n");
+        //logi("Waiting for SDP answer. Ignoring report.\n");
         return;
       } else {
-        logi("SDP answer taking too long. Trying heuristics.\n");
+        //logi("SDP answer taking too long. Trying heuristics.\n");
         if (!uni_hid_device_guess_controller_type_from_packet(d, packet,
                                                               size)) {
-          logi("Heuristics failed. Ignoring report.\n");
+          //logi("Heuristics failed. Ignoring report.\n");
           return;
         } else {
-          logi("Device was detected using heuristics.\n");
+          //logi("Device was detected using heuristics.\n");
           fsm_process(d);
           return;
         }
       }
     } else {
-      logi(
-          "Another SDP query in progress. Disconnect gamepad and try "
-          "again.\n");
+      //logi(
+      //    "Another SDP query in progress. Disconnect gamepad and try "
+      //    "again.\n");
       uni_hid_device_dump_device(d);
       return;
     }
@@ -766,19 +767,19 @@ static void continue_remote_names(void) {
     return;
   }
   uni_hid_device_set_state(d, STATE_REMOTE_NAME_INQUIRED);
-  logi("Fetching remote name of %s\n", bd_addr_to_str(d->address));
+  //logi("Fetching remote name of %s\n", bd_addr_to_str(d->address));
   gap_remote_name_request(d->address, d->page_scan_repetition_mode,
                           d->clock_offset | 0x8000);
 }
 
 static void start_scan(void) {
-  logi("--> Scanning for new devices...\n");
+  //logi("--> Scanning for new devices...\n");
   gap_inquiry_start(INQUIRY_INTERVAL);
 }
 
 static void sdp_query_hid_descriptor(uni_hid_device_t* device) {
-  logi("Starting SDP query for HID descriptor for: %s\n",
-       bd_addr_to_str(device->address));
+  //logi("Starting SDP query for HID descriptor for: %s\n",
+  //     bd_addr_to_str(device->address));
   // Needed for the SDP query since it only supports one SDP query at the time.
   uint64_t elapsed;
   uni_hid_device_t* sdp_dev = uni_hid_device_get_sdp_device(&elapsed);
@@ -791,8 +792,8 @@ static void sdp_query_hid_descriptor(uni_hid_device_t* device) {
           bd_addr_to_str(sdp_dev->address), elapsed);
       return;
     } else {
-      logi("Overriding old SDP query (%s). Elapsed time: %" PRId64 "\n",
-           bd_addr_to_str(sdp_dev->address), elapsed);
+      //logi("Overriding old SDP query (%s). Elapsed time: %" PRId64 "\n",
+      //     bd_addr_to_str(sdp_dev->address), elapsed);
     }
   }
 
@@ -808,7 +809,7 @@ static void sdp_query_hid_descriptor(uni_hid_device_t* device) {
 }
 
 static void sdp_query_product_id(uni_hid_device_t* device) {
-  logi("Starting SDP query for product/vendor ID\n");
+  //logi("Starting SDP query for product/vendor ID\n");
   uni_hid_device_t* sdp_dev = uni_hid_device_get_sdp_device(NULL);
   // This query runs after sdp_query_hid_descriptor() so
   // uni_hid_device_get_sdp_device() must not be NULL
@@ -845,13 +846,13 @@ static void list_link_keys(void) {
     logi("Stored link keys:\n");
 
   while (gap_link_key_iterator_get_next(&it, addr, link_key, &type)) {
-    logi("%s - type %u, key: ", bd_addr_to_str(addr), (int)type);
+    //logi("%s - type %u, key: ", bd_addr_to_str(addr), (int)type);
     printf_hexdump(link_key, 16);
     if (delete_keys) {
       gap_drop_link_key_for_bd_addr(addr);
     }
   }
-  logi(".\n");
+  //logi(".\n");
   gap_link_key_iterator_done(&it);
 }
 
@@ -878,7 +879,7 @@ static void l2cap_create_interrupt_connection(uni_hid_device_t* d) {
 }
 
 static void fsm_process(uni_hid_device_t* d) {
-  // logi("fsm_process: %p = 0x%02x\n", d, d->state);
+  // //logi("fsm_process: %p = 0x%02x\n", d, d->state);
   if (d == NULL) {
     loge("fsm_process: Invalid device\n");
   }
@@ -911,7 +912,7 @@ static void fsm_process(uni_hid_device_t* d) {
     } else if (d->state == STATE_REMOTE_NAME_FETCHED) {
       logd("STATE_REMOTE_NAME_FETCHED\n");
       if (strncmp(d->name, "Wireless Controller", strlen(d->name)) == 0) {
-        logi("Detected DualShock 4. Doing SDP query before connect.\n");
+        //logi("Detected DualShock 4. Doing SDP query before connect.\n");
         d->sdp_query_before_connect = 1;
       }
       if (d->sdp_query_before_connect) {
@@ -963,7 +964,7 @@ int uni_bluetooth_init(void) {
 #endif
 
   int security_level = gap_get_security_level();
-  logi("Gap security level: %d\n", security_level);
+  //logi("Gap security level: %d\n", security_level);
 
   l2cap_register_service(packet_handler, PSM_HID_INTERRUPT, L2CAP_CHANNEL_MTU,
                          security_level);
@@ -998,7 +999,7 @@ void uni_bluetooth_del_keys(void) {
   }
 
   while (gap_link_key_iterator_get_next(&it, addr, link_key, &type)) {
-    logi("Deleting key: %s - type %u\n", bd_addr_to_str(addr), (int)type);
+    //logi("Deleting key: %s - type %u\n", bd_addr_to_str(addr), (int)type);
     gap_drop_link_key_for_bd_addr(addr);
   }
   gap_link_key_iterator_done(&it);

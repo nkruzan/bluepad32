@@ -44,10 +44,10 @@ void uni_hid_parser_smarttvremote_parse_usage(uni_hid_device_t* d,
           gp->battery = value;
           break;
         default:
-          logi(
-              "SmartTVRemote: Unsupported page: 0x%04x, usage: 0x%04x, "
-              "value=0x%x\n",
-              usage_page, usage, value);
+          //logi(
+           //   "SmartTVRemote: Unsupported page: 0x%04x, usage: 0x%04x, "
+           //   "value=0x%x\n",
+           //   usage_page, usage, value);
           break;
       }
       break;
@@ -103,10 +103,10 @@ void uni_hid_parser_smarttvremote_parse_usage(uni_hid_device_t* d,
           gp->updated_states |= GAMEPAD_STATE_MISC_BUTTON_BACK;
           break;
         default:
-          logi(
-              "SmartTVRemote: Unsupported page: 0x%04x, usage: 0x%04x, "
-              "value=0x%x\n",
-              usage_page, usage, value);
+          //logi(
+           //   "SmartTVRemote: Unsupported page: 0x%04x, usage: 0x%04x, "
+           //   "value=0x%x\n",
+           //   usage_page, usage, value);
           break;
       }
       break;
@@ -136,20 +136,20 @@ void uni_hid_parser_smarttvremote_parse_usage(uni_hid_device_t* d,
           gp->updated_states |= GAMEPAD_STATE_MISC_BUTTON_HOME;
           break;
         default:
-          logi(
-              "SmartTVRemote: Unsupported page: 0x%04x, usage: 0x%04x, "
-              "value=0x%x\n",
-              usage_page, usage, value);
+          //logi(
+          //    "SmartTVRemote: Unsupported page: 0x%04x, usage: 0x%04x, "
+           //   "value=0x%x\n",
+           //   usage_page, usage, value);
           break;
       }
       break;
     }
     // unknown usage page
     default:
-      logi(
-          "SmartTVRemote: Unsupported page: 0x%04x, usage: 0x%04x, "
-          "value=0x%x\n",
-          usage_page, usage, value);
+      //logi(
+       //   "SmartTVRemote: Unsupported page: 0x%04x, usage: 0x%04x, "
+       //   "value=0x%x\n",
+       //   usage_page, usage, value);
       break;
   }
 }

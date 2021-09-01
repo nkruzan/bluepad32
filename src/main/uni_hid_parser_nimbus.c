@@ -69,8 +69,8 @@ void uni_hid_parser_nimbus_parse_usage(uni_hid_device_t* d,
           gp->updated_states |= GAMEPAD_STATE_DPAD;
           break;
         default:
-          logi("Nimbus: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
-               usage_page, usage, value);
+          //logi("Nimbus: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
+          //     usage_page, usage, value);
           break;
       }
       break;
@@ -85,8 +85,8 @@ void uni_hid_parser_nimbus_parse_usage(uni_hid_device_t* d,
           gp->updated_states |= GAMEPAD_STATE_BRAKE;
           break;
         default:
-          logi("Nimbus: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
-               usage_page, usage, value);
+          //logi("Nimbus: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
+           //    usage_page, usage, value);
           break;
       };
       break;
@@ -96,8 +96,8 @@ void uni_hid_parser_nimbus_parse_usage(uni_hid_device_t* d,
           gp->battery = value;
           break;
         default:
-          logi("Nimbus: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
-               usage_page, usage, value);
+          //logi("Nimbus: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
+           //    usage_page, usage, value);
           break;
       }
       break;
@@ -168,8 +168,8 @@ void uni_hid_parser_nimbus_parse_usage(uni_hid_device_t* d,
           gp->updated_states |= GAMEPAD_STATE_THROTTLE;
           break;
         default:
-          logi("Nimbus: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
-               usage_page, usage, value);
+          //logi("Nimbus: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
+           //    usage_page, usage, value);
           break;
       }
       break;
@@ -187,16 +187,16 @@ void uni_hid_parser_nimbus_parse_usage(uni_hid_device_t* d,
         case HID_USAGE_AC_BACK:
           break;
         default:
-          logi("Nimbus: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
-               usage_page, usage, value);
+          //logi("Nimbus: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
+           //    usage_page, usage, value);
           break;
       }
       break;
 
     // unknown usage page
     default:
-      logi("Nimbus: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
-           usage_page, usage, value);
+      //logi("Nimbus: Unsupported page: 0x%04x, usage: 0x%04x, value=0x%x\n",
+        //   usage_page, usage, value);
       break;
   }
 }

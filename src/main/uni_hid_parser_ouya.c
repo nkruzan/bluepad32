@@ -60,10 +60,10 @@ void uni_hid_parser_ouya_parse_usage(uni_hid_device_t* d,
           gp->updated_states |= GAMEPAD_STATE_THROTTLE;
           break;
         default:
-          logi(
-              "OUYA: Unsupported usage page=0x%04x, page=0x%04x, "
-              "value=0x%04x\n",
-              usage_page, usage, value);
+          //logi(
+          //    "OUYA: Unsupported usage page=0x%04x, page=0x%04x, "
+          //    "value=0x%04x\n",
+          //    usage_page, usage, value);
           break;
       }
       break;
@@ -177,18 +177,18 @@ void uni_hid_parser_ouya_parse_usage(uni_hid_device_t* d,
         case 0x10:  // Not mapped but reported.
           break;
         default:
-          logi(
-              "OUYA: Unsupported usage page=0x%04x, page=0x%04x, "
-              "value=0x%04x\n",
-              usage_page, usage, value);
+          //logi(
+          //    "OUYA: Unsupported usage page=0x%04x, page=0x%04x, "
+          //    "value=0x%04x\n",
+         //     usage_page, usage, value);
           break;
       }
       break;
     case 0xff00:  // OUYA specific, but not mapped apparently
       break;
     default:
-      logi("OUYA: Unsupported usage page=0x%04x, page=0x%04x, value=0x%04x\n",
-           usage_page, usage, value);
+      //logi("OUYA: Unsupported usage page=0x%04x, page=0x%04x, value=0x%04x\n",
+       //    usage_page, usage, value);
       break;
   }
 }

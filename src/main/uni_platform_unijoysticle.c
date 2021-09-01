@@ -219,19 +219,19 @@ static void unijoysticle_init(int argc, const char** argv) {
 
   switch (model) {
     case BOARD_MODEL_UNIJOYSTICLE2:
-      logi("Hardware detected: Unijoysticle 2\n");
+      //logi("Hardware detected: Unijoysticle 2\n");
       g_uni_config = &uni_gpio_config_v2;
       break;
     case BOARD_MODEL_UNIJOYSTICLE2_PLUS:
-      logi("Hardware detected: Unijoysticle 2+\n");
+      //logi("Hardware detected: Unijoysticle 2+\n");
       g_uni_config = &uni_gpio_config_v2plus;
       break;
     case BOARD_MODEL_UNIJOYSTICLE2_SINGLE_PORT:
-      logi("Hardware detected: Unijoysticle 2 single port\n");
+      //logi("Hardware detected: Unijoysticle 2 single port\n");
       g_uni_config = &uni_gpio_config_singleport;
       break;
     default:
-      logi("Hardware detected: ERROR!\n");
+      //logi("Hardware detected: ERROR!\n");
       g_uni_config = &uni_gpio_config_v2;
       break;
   }
@@ -372,7 +372,7 @@ static int unijoysticle_on_device_ready(uni_hid_device_t* d) {
 
     // If wanted port is already assigned, try with the next one
     if (used_joystick_ports & wanted_seat) {
-      logi("unijoysticle: Port already assigned, trying another one\n");
+      //logi("unijoysticle: Port already assigned, trying another one\n");
       wanted_seat = (~wanted_seat) & GAMEPAD_SEAT_AB_MASK;
     }
   }
@@ -419,6 +419,7 @@ static void unijoysticle_on_gamepad_data(uni_hid_device_t* d,
       loge("unijoysticle: Unsupported emulation mode: %d\n", ins->emu_mode);
       break;
   }
+  uni_gamepad_dump(gp);
 }
 
 static int32_t unijoysticle_get_property(uni_platform_property_t key) {
@@ -444,17 +445,17 @@ static void unijoysticle_on_device_oob_event(uni_hid_device_t* d,
   unijoysticle_instance_t* ins = get_unijoysticle_instance(d);
 
   if (ins->gamepad_seat == GAMEPAD_SEAT_NONE) {
-    logi(
-        "unijoysticle: cannot swap port since device has joystick_port = "
-        "GAMEPAD_SEAT_NONE\n");
+    //logi(
+      //  "unijoysticle: cannot swap port since device has joystick_port = "
+     //   "GAMEPAD_SEAT_NONE\n");
     return;
   }
 
   // This could happen if device is any Combo emu mode.
   if (ins->gamepad_seat == (GAMEPAD_SEAT_A | GAMEPAD_SEAT_B)) {
-    logi(
-        "unijoysticle: cannot swap port since has more than one port "
-        "associated with. Leave emu mode and try again.\n");
+    //logi(
+   //     "unijoysticle: cannot swap port since has more than one port "
+   //     "associated with. Leave emu mode and try again.\n");
     return;
   }
 
@@ -466,9 +467,9 @@ static void unijoysticle_on_device_oob_event(uni_hid_device_t* d,
         (get_unijoysticle_instance(tmp_d)->gamepad_seat > 0)) {
       num_devices++;
       if (num_devices > 1) {
-        logi(
-            "unijoysticle: cannot swap joystick ports when more than one "
-            "device is attached\n");
+        //logi(
+        //    "unijoysticle: cannot swap joystick ports when more than one "
+        //    "device is attached\n");
         uni_hid_device_dump_all();
         return;
       }
@@ -577,8 +578,8 @@ static void set_gamepad_seat(uni_hid_device_t* d, uni_gamepad_seat_t seat) {
   unijoysticle_instance_t* ins = get_unijoysticle_instance(d);
   ins->gamepad_seat = seat;
 
-  logi("unijoysticle: device %s has new gamepad seat: %d\n",
-       bd_addr_to_str(d->address), seat);
+  //logi("unijoysticle: device %s has new gamepad seat: %d\n",
+   //    bd_addr_to_str(d->address), seat);
 
   // Fetch all enabled ports
   uni_gamepad_seat_t all_seats = GAMEPAD_SEAT_NONE;
@@ -795,7 +796,7 @@ static void handle_event_button() {
   }
 
   // "down", button pressed.
-  logi("handle_event_button: %d -> %d\n", enabled, !enabled);
+  //logi("handle_event_button: %d -> %d\n", enabled, !enabled);
   enabled = !enabled;
 
   // Change emulation mode
@@ -827,13 +828,13 @@ static void handle_event_button() {
     ins->emu_mode = EMULATION_MODE_COMBO_JOY_JOY;
     ins->prev_gamepad_seat = ins->gamepad_seat;
     set_gamepad_seat(d, GAMEPAD_SEAT_A | GAMEPAD_SEAT_B);
-    logi("unijoysticle: Emulation mode = Combo Joy Joy\n");
+    //logi("unijoysticle: Emulation mode = Combo Joy Joy\n");
 
   } else if (ins->emu_mode == EMULATION_MODE_COMBO_JOY_JOY) {
     ins->emu_mode = EMULATION_MODE_SINGLE_JOY;
     set_gamepad_seat(d, ins->prev_gamepad_seat);
     // Turn on only the valid one
-    logi("unijoysticle: Emulation mode = Single Joy\n");
+    //logi("unijoysticle: Emulation mode = Single Joy\n");
 
   } else {
     loge("unijoysticle: Cannot switch emu mode. Current mode: %d\n",

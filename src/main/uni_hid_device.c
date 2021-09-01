@@ -332,7 +332,7 @@ bool uni_hid_device_auto_delete(uni_hid_device_t* d) {
   // 15 is an arbitrary number that seems to work Ok.
   if (++d->auto_delete < 10) return false;
 
-  logi("Autodeleting device:\n");
+  //logi("Autodeleting device:\n");
   uni_hid_device_dump_device(d);
 
   if (d->state == STATE_DEVICE_READY) {
@@ -349,17 +349,17 @@ bool uni_hid_device_auto_delete(uni_hid_device_t* d) {
 }
 
 void uni_hid_device_dump_device(uni_hid_device_t* d) {
-  logi(
-      "%s, handle=%d, ctrl_cid=0x%04x, intr_cid=0x%04x, cod=0x%08x, "
-      "vid=0x%04x, pid=0x%04x, flags=0x%08x, "
-      "ctrl_type=0x%02x, name='%s', (del:%d)\n",
-      bd_addr_to_str(d->address), d->con_handle, d->hid_control_cid,
-      d->hid_interrupt_cid, d->cod, d->vendor_id, d->product_id, d->flags,
-      d->controller_type, d->name, d->auto_delete);
+  //logi(
+  //    "%s, handle=%d, ctrl_cid=0x%04x, intr_cid=0x%04x, cod=0x%08x, "
+  //    "vid=0x%04x, pid=0x%04x, flags=0x%08x, "
+  //    "ctrl_type=0x%02x, name='%s', (del:%d)\n",
+ //     bd_addr_to_str(d->address), d->con_handle, d->hid_control_cid,
+ //     d->hid_interrupt_cid, d->cod, d->vendor_id, d->product_id, d->flags,
+  //    d->controller_type, d->name, d->auto_delete);
 }
 
 void uni_hid_device_dump_all(void) {
-  logi("Connected devices:\n");
+  //logi("Connected devices:\n");
   for (int i = 0; i < UNI_HID_DEVICE_MAX_DEVICES; i++) {
     if (bd_addr_cmp(g_devices[i].address, zero_addr) == 0) continue;
     uni_hid_device_dump_device(&g_devices[i]);
@@ -384,7 +384,7 @@ uint8_t uni_hid_device_guess_controller_type_from_packet(uni_hid_device_t* d,
 
 void uni_hid_device_guess_controller_type_from_pid_vid(uni_hid_device_t* d) {
   if (uni_hid_device_has_controller_type(d)) {
-    logi("device already has a controller type");
+    //logi("device already has a controller type");
     return;
   }
   // Try to guess it from Vendor/Product id.
@@ -393,8 +393,8 @@ void uni_hid_device_guess_controller_type_from_pid_vid(uni_hid_device_t* d) {
 
   // If it fails, try to guess it from COD
   if (type == CONTROLLER_TYPE_Unknown) {
-    logi("Device (vendor_id=0x%04x, product_id=0x%04x) not found in DB.\n",
-         d->vendor_id, d->product_id);
+    //logi("Device (vendor_id=0x%04x, product_id=0x%04x) not found in DB.\n",
+   //      d->vendor_id, d->product_id);
     uint32_t mouse_cod =
         MASK_COD_MAJOR_PERIPHERAL | MASK_COD_MINOR_POINT_DEVICE;
     uint32_t keyboard_cod = MASK_COD_MAJOR_PERIPHERAL | MASK_COD_MINOR_KEYBOARD;
@@ -420,37 +420,37 @@ void uni_hid_device_guess_controller_type_from_pid_vid(uni_hid_device_t* d) {
     case CONTROLLER_TYPE_iCadeController:
       d->report_parser.setup = uni_hid_parser_icade_setup;
       d->report_parser.parse_usage = uni_hid_parser_icade_parse_usage;
-      logi("Device detected as iCade: 0x%02x\n", type);
+      //logi("Device detected as iCade: 0x%02x\n", type);
       break;
     case CONTROLLER_TYPE_OUYAController:
       d->report_parser.init_report = uni_hid_parser_ouya_init_report;
       d->report_parser.parse_usage = uni_hid_parser_ouya_parse_usage;
       d->report_parser.set_player_leds = uni_hid_parser_ouya_set_player_leds;
-      logi("Device detected as OUYA: 0x%02x\n", type);
+      //logi("Device detected as OUYA: 0x%02x\n", type);
       break;
     case CONTROLLER_TYPE_XBoxOneController:
       d->report_parser.setup = uni_hid_parser_xboxone_setup;
       d->report_parser.init_report = uni_hid_parser_xboxone_init_report;
       d->report_parser.parse_usage = uni_hid_parser_xboxone_parse_usage;
       d->report_parser.set_rumble = uni_hid_parser_xboxone_set_rumble;
-      logi("Device detected as Xbox One: 0x%02x\n", type);
+      //logi("Device detected as Xbox One: 0x%02x\n", type);
       break;
     case CONTROLLER_TYPE_AndroidController:
       d->report_parser.init_report = uni_hid_parser_android_init_report;
       d->report_parser.parse_usage = uni_hid_parser_android_parse_usage;
       d->report_parser.set_player_leds = uni_hid_parser_android_set_player_leds;
-      logi("Device detected as Android: 0x%02x\n", type);
+      //logi("Device detected as Android: 0x%02x\n", type);
       break;
     case CONTROLLER_TYPE_NimbusController:
       d->report_parser.init_report = uni_hid_parser_nimbus_init_report;
       d->report_parser.parse_usage = uni_hid_parser_nimbus_parse_usage;
       d->report_parser.set_player_leds = uni_hid_parser_nimbus_set_player_leds;
-      logi("Device detected as Nimbus: 0x%02x\n", type);
+      //logi("Device detected as Nimbus: 0x%02x\n", type);
       break;
     case CONTROLLER_TYPE_SmartTVRemoteController:
       d->report_parser.init_report = uni_hid_parser_smarttvremote_init_report;
       d->report_parser.parse_usage = uni_hid_parser_smarttvremote_parse_usage;
-      logi("Device detected as Smart TV remote: 0x%02x\n", type);
+      //logi("Device detected as Smart TV remote: 0x%02x\n", type);
       break;
     case CONTROLLER_TYPE_PS3Controller:
       d->report_parser.setup = uni_hid_parser_ds3_setup;
@@ -458,7 +458,7 @@ void uni_hid_device_guess_controller_type_from_pid_vid(uni_hid_device_t* d) {
       d->report_parser.parse_raw = uni_hid_parser_ds3_parse_raw;
       d->report_parser.set_player_leds = uni_hid_parser_ds3_set_player_leds;
       d->report_parser.set_rumble = uni_hid_parser_ds3_set_rumble;
-      logi("Device detected as DUALSHOCK3: 0x%02x\n", type);
+      //logi("Device detected as DUALSHOCK3: 0x%02x\n", type);
       break;
     case CONTROLLER_TYPE_PS4Controller:
       d->report_parser.setup = uni_hid_parser_ds4_setup;
@@ -467,7 +467,7 @@ void uni_hid_device_guess_controller_type_from_pid_vid(uni_hid_device_t* d) {
       d->report_parser.set_lightbar_color =
           uni_hid_parser_ds4_set_lightbar_color;
       d->report_parser.set_rumble = uni_hid_parser_ds4_set_rumble;
-      logi("Device detected as DUALSHOCK4: 0x%02x\n", type);
+      //logi("Device detected as DUALSHOCK4: 0x%02x\n", type);
       break;
     case CONTROLLER_TYPE_PS5Controller:
       d->report_parser.init_report = uni_hid_parser_ds5_init_report;
@@ -477,24 +477,24 @@ void uni_hid_device_guess_controller_type_from_pid_vid(uni_hid_device_t* d) {
       d->report_parser.set_lightbar_color =
           uni_hid_parser_ds5_set_lightbar_color;
       d->report_parser.set_rumble = uni_hid_parser_ds5_set_rumble;
-      logi("Device detected as DualSense: 0x%02x\n", type);
+      //logi("Device detected as DualSense: 0x%02x\n", type);
       break;
     case CONTROLLER_TYPE_8BitdoController:
       d->report_parser.init_report = uni_hid_parser_8bitdo_init_report;
       d->report_parser.parse_usage = uni_hid_parser_8bitdo_parse_usage;
-      logi("Device detected as 8BITDO: 0x%02x\n", type);
+      //logi("Device detected as 8BITDO: 0x%02x\n", type);
       break;
     case CONTROLLER_TYPE_GenericController:
       d->report_parser.init_report = uni_hid_parser_generic_init_report;
       d->report_parser.parse_usage = uni_hid_parser_generic_parse_usage;
-      logi("Device detected as generic: 0x%02x\n", type);
+      //logi("Device detected as generic: 0x%02x\n", type);
       break;
     case CONTROLLER_TYPE_WiiController:
       d->report_parser.setup = uni_hid_parser_wii_setup;
       d->report_parser.init_report = uni_hid_parser_wii_init_report;
       d->report_parser.parse_raw = uni_hid_parser_wii_parse_raw;
       d->report_parser.set_player_leds = uni_hid_parser_wii_set_player_leds;
-      logi("Device detected as Wii controller: 0x%02x\n", type);
+      //logi("Device detected as Wii controller: 0x%02x\n", type);
       break;
     case CONTROLLER_TYPE_SwitchProController:
     case CONTROLLER_TYPE_SwitchJoyConRight:
@@ -504,12 +504,12 @@ void uni_hid_device_guess_controller_type_from_pid_vid(uni_hid_device_t* d) {
       d->report_parser.parse_raw = uni_hid_parser_switch_parse_raw;
       d->report_parser.set_player_leds = uni_hid_parser_switch_set_player_leds;
       d->report_parser.set_rumble = uni_hid_parser_switch_set_rumble;
-      logi("Device detected as Nintendo Switch Pro controller: 0x%02x\n", type);
+      //logi("Device detected as Nintendo Switch Pro controller: 0x%02x\n", type);
       break;
     default:
       d->report_parser.init_report = uni_hid_parser_generic_init_report;
       d->report_parser.parse_usage = uni_hid_parser_generic_parse_usage;
-      logi("Device not detected (0x%02x). Using generic driver.\n", type);
+      //logi("Device not detected (0x%02x). Using generic driver.\n", type);
       break;
   }
 
@@ -598,7 +598,7 @@ void uni_hid_device_set_state(uni_hid_device_t* d, enum DEVICE_STATE s) {
     loge("ERROR: Invalid device\n");
     return;
   }
-  // logi("set_state: 0x%02x -> 0x%02x\n", d->state, s);
+  // //logi("set_state: 0x%02x -> 0x%02x\n", d->state, s);
   d->state = s;
 }
 
@@ -630,7 +630,7 @@ void uni_hid_device_send_report(uni_hid_device_t* d, uint16_t cid,
 
   int err = l2cap_send(cid, (uint8_t*)report, len);
   if (err != 0) {
-    logi("Could not send report (error=0x%04x). Adding it to queue\n", err);
+    //logi("Could not send report (error=0x%04x). Adding it to queue\n", err);
     if (uni_circular_buffer_put(&d->outgoing_buffer, cid, report, len) != 0) {
       loge("ERROR: ciruclar buffer full. Cannot queue report\n");
     }

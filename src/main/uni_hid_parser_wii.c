@@ -214,11 +214,11 @@ static void process_req_status(uni_hid_device_t* d, const uint8_t* report,
       // Extension detected: Nunchuk?
       // Regardless of the previous FSM state, we overwrite it with "query
       // extension".
-      logi("Wii: extension found.\n");
+      //logi("Wii: extension found.\n");
       ins->state = WII_FSM_EXT_UNK;
       ins->ext_type = WII_EXT_UNK;
     } else {
-      logi("Wii: No extensions found.\n");
+      //logi("Wii: No extensions found.\n");
       ins->ext_type = WII_EXT_NONE;
     }
 
@@ -258,14 +258,14 @@ static void process_req_data_read_register(uni_hid_device_t* d,
       // Pro Controller: 00 00 a4 20 01 20
       ins->dev_type = WII_DEVTYPE_PRO_CONTROLLER;
       ins->ext_type = WII_EXT_U_PRO_CONTROLLER;
-      logi("Wii: Pro Controller extension found\n");
+      //logi("Wii: Pro Controller extension found\n");
     } else if (ins->dev_type == WII_DEVTYPE_UNK) {
       if (d->product_id == 0x0330) {
         ins->dev_type = WII_DEVTYPE_REMOTE_MP;
-        logi("Wii Remote MP detected\n");
+        //logi("Wii Remote MP detected\n");
       } else if (d->product_id == 0x0306) {
         ins->dev_type = WII_DEVTYPE_REMOTE;
-        logi("Wii Remote detected\n");
+        //logi("Wii Remote detected\n");
       } else {
         loge("Wii: Unknown product id: 0x%04x\n", d->product_id);
       }
@@ -276,13 +276,13 @@ static void process_req_data_read_register(uni_hid_device_t* d,
       if (report[10] == 0x00 && report[11] == 0x00) {
         // Nunchuck: 00 00 a4 20 00 00
         ins->ext_type = WII_EXT_NUNCHUK;
-        logi("Wii: Nunchuk extension found\n");
+        //logi("Wii: Nunchuk extension found\n");
       } else if (report[10] == 0x01 && report[11] == 0x01) {
         // Classic / Classic Pro: 0? 00 a4 20 01 01
         ins->ext_type = WII_EXT_CLASSIC_CONTROLLER;
-        logi(
-            "Wii: Classic Controller / Classic Controller Pro extension "
-            "found\n");
+        //logi(
+         //   "Wii: Classic Controller / Classic Controller Pro extension "
+         //   "found\n");
       } else {
         loge("Wii: Unknown extension\n");
         printf_hexdump(report, len);
@@ -312,7 +312,7 @@ static void process_req_data_dump_eeprom(uni_hid_device_t* d,
   wii_instance_t* ins = get_wii_instance(d);
   uint16_t addr = report[4] << 8 | report[5];
 
-  logi("Wii: dumping %d bytes at address: 0x%04x\n", s, addr);
+  //logi("Wii: dumping %d bytes at address: 0x%04x\n", s, addr);
   write(ins->debug_fd, &report[6], s);
 #else
   UNUSED(d);
@@ -324,7 +324,7 @@ static void process_req_data_dump_eeprom(uni_hid_device_t* d,
 // Defined here: http://wiibrew.org/wiki/Wiimote#0x21:_Read_Memory_Data
 static void process_req_data(uni_hid_device_t* d, const uint8_t* report,
                              uint16_t len) {
-  logi("**** process_req_data\n");
+  //logi("**** process_req_data\n");
   printf_hexdump(report, len);
 
   if (len < 22) {
@@ -366,9 +366,9 @@ static void process_req_return(uni_hid_device_t* d, const uint8_t* report,
         // If 0xa6 works Ok, it is safe to assume it is a Wii Remote MP, but
         // for the sake of finishing the "read extension" (might be useful
         // in the future), we continue with it.
-        logi(
-            "Probably a Remote MP device. Switching to 0xa60000 address "
-            "for registers.\n");
+        //logi(
+       //     "Probably a Remote MP device. Switching to 0xa60000 address "
+        //    "for registers.\n");
         ins->state = WII_FSM_DEV_UNK;
         ins->register_address =
             0xa6;  // Register address used for Wii Remote MP.
@@ -829,7 +829,7 @@ static void process_drm_e(uni_hid_device_t* d, const uint8_t* report,
 // wii_fsm_ functions
 
 static void wii_fsm_req_status(uni_hid_device_t* d) {
-  logi("fsm: req_status\n");
+  //logi("fsm: req_status\n");
   wii_instance_t* ins = get_wii_instance(d);
   ins->state = WII_FSM_DID_REQ_STATUS;
   const uint8_t status[] = {0xa2, WIIPROTO_REQ_SREQ, 0x00 /* rumble off */};
@@ -837,7 +837,7 @@ static void wii_fsm_req_status(uni_hid_device_t* d) {
 }
 
 static void wii_fsm_ext_init(uni_hid_device_t* d) {
-  logi("fsm: ext_init\n");
+  //logi("fsm: ext_init\n");
   wii_instance_t* ins = get_wii_instance(d);
   ins->state = WII_FSM_EXT_DID_INIT;
   // Init Wii
@@ -859,7 +859,7 @@ static void wii_fsm_ext_init(uni_hid_device_t* d) {
 }
 
 static void wii_fsm_ext_encrypt_off(uni_hid_device_t* d) {
-  logi("fsm: ext_encrypt_off\n");
+  //logi("fsm: ext_encrypt_off\n");
   wii_instance_t* ins = get_wii_instance(d);
   ins->state = WII_FSM_EXT_DID_NO_ENCRYPTION;
   // Init Wii
@@ -881,7 +881,7 @@ static void wii_fsm_ext_encrypt_off(uni_hid_device_t* d) {
 }
 
 static void wii_fsm_ext_read_register(uni_hid_device_t* d) {
-  logi("fsm: ext_read_register\n");
+  //logi("fsm: ext_read_register\n");
   wii_instance_t* ins = get_wii_instance(d);
   ins->state = WII_FSM_EXT_DID_READ_REGISTER;
 
@@ -892,7 +892,7 @@ static void wii_fsm_ext_read_register(uni_hid_device_t* d) {
 }
 
 static void wii_fsm_assign_device(uni_hid_device_t* d) {
-  logi("fsm: assign_device\n");
+  //logi("fsm: assign_device\n");
   wii_instance_t* ins = get_wii_instance(d);
   uint8_t dev = ins->dev_type;
   switch (dev) {
@@ -900,11 +900,11 @@ static void wii_fsm_assign_device(uni_hid_device_t* d) {
     case WII_DEVTYPE_REMOTE:
     case WII_DEVTYPE_REMOTE_MP: {
       if (dev == WII_DEVTYPE_REMOTE) {
-        logi("Wii Remote detected.\n");
+        //logi("Wii Remote detected.\n");
       } else if (dev == WII_DEVTYPE_REMOTE_MP) {
-        logi("Wii Remote (2nd gen) Motion Plus detected.\n");
+        //logi("Wii Remote (2nd gen) Motion Plus detected.\n");
       } else {
-        logi("Unknown Wii device detected. Treating it as Wii Remote.\n");
+        //logi("Unknown Wii device detected. Treating it as Wii Remote.\n");
       }
       uint8_t reportType = 0xff;
       if (ins->ext_type == WII_EXT_NUNCHUK) {
@@ -912,12 +912,12 @@ static void wii_fsm_assign_device(uni_hid_device_t* d) {
         if (ins->flags & WII_FLAGS_ACCEL) {
           // Request Core buttons + Accel + extension (nunchuk)
           reportType = WIIPROTO_REQ_DRM_KAE;
-          logi("Wii: requesting Core buttons + Accelerometer + E (Nunchuk)\n");
+          //logi("Wii: requesting Core buttons + Accelerometer + E (Nunchuk)\n");
           d->controller_subtype = CONTROLLER_SUBTYPE_WIIMOTE_NCHKACCEL;
         } else {
           // Request Core buttons + extension (nunchuk)
           reportType = WIIPROTO_REQ_DRM_KE;
-          logi("Wii: requesting Core buttons + E (Nunchuk)\n");
+          //logi("Wii: requesting Core buttons + E (Nunchuk)\n");
           if (ins->flags == WII_FLAGS_VERTICAL) {
             d->controller_subtype = CONTROLLER_SUBTYPE_WIIMOTE_NCHK2JOYS;
           } else {
@@ -925,18 +925,18 @@ static void wii_fsm_assign_device(uni_hid_device_t* d) {
           }
         }
       } else if (ins->ext_type == WII_EXT_CLASSIC_CONTROLLER) {
-        logi("Wii: requesting E (Classic Controller)\n");
+        //logi("Wii: requesting E (Classic Controller)\n");
         d->controller_subtype = CONTROLLER_SUBTYPE_WII_CLASSIC;
         reportType = WIIPROTO_REQ_DRM_E;
       } else {
         if (ins->flags & WII_FLAGS_ACCEL) {
           // Request Core buttons + accel
           reportType = WIIPROTO_REQ_DRM_KA;
-          logi("Wii: requesting Core buttons + Accelerometer\n");
+          //logi("Wii: requesting Core buttons + Accelerometer\n");
           d->controller_subtype = CONTROLLER_SUBTYPE_WIIMOTE_ACCEL;
         } else {
           reportType = WIIPROTO_REQ_DRM_K;
-          logi("Wii: requesting Core buttons\n");
+          //logi("Wii: requesting Core buttons\n");
           if (ins->flags & WII_FLAGS_VERTICAL) {
             d->controller_subtype = CONTROLLER_SUBTYPE_WIIMOTE_VERT;
           } else {
@@ -949,7 +949,7 @@ static void wii_fsm_assign_device(uni_hid_device_t* d) {
       break;
     }
     case WII_DEVTYPE_PRO_CONTROLLER: {
-      logi("Wii U Pro controller detected.\n");
+      //logi("Wii U Pro controller detected.\n");
       d->controller_subtype = CONTROLLER_SUBTYPE_WIIUPRO;
       // 0x34 WIIPROTO_REQ_DRM_KEE (present in Wii U Pro controller)
       const uint8_t reportKee[] = {0xa2, WIIPROTO_REQ_DRM, 0x00,
@@ -963,7 +963,7 @@ static void wii_fsm_assign_device(uni_hid_device_t* d) {
 }
 
 static void wii_fsm_update_led(uni_hid_device_t* d) {
-  logi("fsm: upload_led\n");
+  //logi("fsm: upload_led\n");
   wii_instance_t* ins = get_wii_instance(d);
   set_led(d, ins->gamepad_seat);
   ins->state = WII_FSM_LED_UPDATED;
@@ -1094,7 +1094,7 @@ void uni_hid_parser_wii_parse_raw(uni_hid_device_t* d, const uint8_t* report,
       process_req_return(d, report, len);
       break;
     default:
-      logi("Wii parser: unknown report type: 0x%02x\n", report[0]);
+      //logi("Wii parser: unknown report type: 0x%02x\n", report[0]);
       printf_hexdump(report, len);
   }
 }
@@ -1144,7 +1144,7 @@ static void set_led(uni_hid_device_t* d, uni_gamepad_seat_t seat) {
 
 static void wii_read_mem(uni_hid_device_t* d, wii_read_type_t t,
                          uint32_t offset, uint16_t size) {
-  logi("****** read_mem: offset=0x%04x, size=%d from=%d\n", offset, size, t);
+  //logi("****** read_mem: offset=0x%04x, size=%d from=%d\n", offset, size, t);
   uint8_t report[] = {
       // clang-format off
       0xa2, WIIPROTO_REQ_RMEM,

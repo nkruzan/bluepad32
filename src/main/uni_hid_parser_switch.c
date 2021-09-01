@@ -517,7 +517,7 @@ static void process_reply_read_spi_dump(struct uni_hid_device_s* d,
     return;
   }
 
-  logi("Switch: dumping %d bytes at address: 0x%04x\n", chunk_size, addr);
+  //logi("Switch: dumping %d bytes at address: 0x%04x\n", chunk_size, addr);
   write(ins->debug_fd, &data[5], chunk_size);
 #else
   UNUSED(d);
@@ -566,19 +566,19 @@ static void process_reply_read_spi_factory_calibration(
   ins->cal_ry.min = ins->cal_ry.center - cal_ry_min;
   ins->cal_ry.max = ins->cal_ry.center + cal_ry_max;
 
-  logi(
-      "Switch: Calibration info: x=%d,%d,%d, y=%d,%d,%d, rx=%d,%d,%d, "
-      "ry=%d,%d,%d\n",
-      ins->cal_x.min, ins->cal_x.center, ins->cal_x.max, ins->cal_y.min,
-      ins->cal_y.center, ins->cal_y.max, ins->cal_rx.min, ins->cal_rx.center,
-      ins->cal_rx.max, ins->cal_ry.min, ins->cal_ry.center, ins->cal_ry.max);
+  //logi(
+   //   "Switch: Calibration info: x=%d,%d,%d, y=%d,%d,%d, rx=%d,%d,%d, "
+   //   "ry=%d,%d,%d\n",
+  //    ins->cal_x.min, ins->cal_x.center, ins->cal_x.max, ins->cal_y.min,
+  //    ins->cal_y.center, ins->cal_y.max, ins->cal_rx.min, ins->cal_rx.center,
+   //   ins->cal_rx.max, ins->cal_ry.min, ins->cal_ry.center, ins->cal_ry.max);
 }
 
 static void process_reply_read_spi_user_calibration(struct uni_hid_device_s* d,
                                                     const uint8_t* data,
                                                     int len) {
   UNUSED(d);
-  logi("process_reply_read_spi_user_calibration\n");
+  //logi("process_reply_read_spi_user_calibration\n");
   printf_hexdump(data, len);
 }
 
@@ -601,8 +601,8 @@ static void process_reply_req_dev_info(struct uni_hid_device_s* d,
   ins->firmware_version_hi = r->data[0];
   ins->firmware_version_lo = r->data[1];
   ins->controller_type = r->data[2];
-  logi("Switch: Firmware version: %d.%d. Controller type=%d\n", r->data[0],
-       r->data[1], r->data[2]);
+  //logi("Switch: Firmware version: %d.%d. Controller type=%d\n", r->data[0],
+  //     r->data[1], r->data[2]);
 }
 
 // Reply to SUBCMD_SET_REPORT_MODE
@@ -1026,7 +1026,7 @@ static void fsm_update_led(struct uni_hid_device_s* d) {
 static void fsm_ready(struct uni_hid_device_s* d) {
   switch_instance_t* ins = get_switch_instance(d);
   ins->state = STATE_READY;
-  logi("Switch: gamepad is ready!\n");
+  //logi("Switch: gamepad is ready!\n");
 }
 
 static struct switch_rumble_freq_data find_rumble_freq(uint16_t freq) {
@@ -1123,9 +1123,9 @@ uint8_t uni_hid_parser_switch_does_packet_match(struct uni_hid_device_s* d,
   uni_hid_device_guess_controller_type_from_pid_vid(d);
   uni_hid_device_set_sdp_device(NULL);
   uni_hid_device_set_state(d, STATE_SDP_VENDOR_FETCHED);
-  logi(
-      "Switch: Device detected as Nintendo Switch Pro controller using "
-      "heuristics\n");
+  //logi(
+  //    "Switch: Device detected as Nintendo Switch Pro controller using "
+   //   "heuristics\n");
   return 1;
 }
 
